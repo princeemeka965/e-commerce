@@ -2,6 +2,5 @@
 </script>
 
 <template>
-  <main>
-  </main>
+  <div class="w-full flex p-5 m-10"></div>
 </template>
