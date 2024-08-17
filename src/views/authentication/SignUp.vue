@@ -3,11 +3,10 @@ import AuthLayout from '@/components/authLayout.vue'
 </script>
 
 <template>
-  <div className="w-full h-full flex flex-col" style="overflow: hidden">
-    <div className="w-full h-full flex lg:flex-row md:flex-row flex-col">
-      <AuthLayout />
+  <AuthLayout>
+    <template v-slot:layout>
       <div
-        className="flex lg:w-1/2 md:w-1/2 w-full flex-grow h-full lg:p-10 md:p-10 py-10 px-5 bg-white"
+        className="flex lg:w-1/2 md:w-1/2 relative w-full flex-grow h-full lg:p-10 md:p-10 py-10 px-5 bg-white top-52 lg:top-0 md:top-0"
       >
         <div className="flex w-full flex-col lg:justify-center md:justify-center sign-block">
           <div className="w-full flex justify-center div-left">
@@ -92,8 +91,8 @@ import AuthLayout from '@/components/authLayout.vue'
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </AuthLayout>
 </template>
 
 <style scoped>
