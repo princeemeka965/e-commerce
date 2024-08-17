@@ -5,3 +5,15 @@
 body {
   margin: 0;
 }
+
+@media screen and (min-width: 1280px) {
+  .sign-block {
+    height: 88vh;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .sign-block {
+    min-height: 8vh;
+  }
+}
