@@ -1,8 +1,10 @@
 <script setup>
 import { reactive, toRefs } from 'vue'
+import { useRouter } from 'vue-router'
 import useVuelidate from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
 import AuthLayout from '@/components/authLayout.vue'
+import { useAuthStore } from '@/stores/auth';
 
 const state = reactive({
   name: '',
@@ -17,13 +19,20 @@ const rules = {
 
 const v$ = useVuelidate(rules, state)
 
+const router = useRouter()
+
+const authStore = useAuthStore();
+
 async function submitForm() {
   const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) {
     return
   }
-  // Perform the actual form submission (e.g., API call)
-  alert('Form submitted successfully!')
+  // Perform the actual form submission
+  authStore.signUp(state);
+
+  if (authStore.isAuthenticated)
+  router.push('/shop')
 }
 </script>
 
@@ -62,6 +71,7 @@ async function submitForm() {
                         :class="
                           v$.name.$invalid && v$.name.$dirty ? 'border-red-500 border-2' : 'border'
                         "
+                        autocomplete="off"
                         class="peer h-full w-full rounded-md border-blue-gray-200 !border-t-blue-gray-200 bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                       />
                       <label
@@ -86,6 +96,7 @@ async function submitForm() {
                         :class="
                           v$.email.$invalid && v$.email.$dirty ? 'border-red-500 border-2' : 'border'
                         "
+                        autocomplete="off"
                         class="peer h-full w-full rounded-md border border-blue-gray-200 !border-t-blue-gray-200 bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:!border-t-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                       />
                       <label
@@ -112,6 +123,7 @@ async function submitForm() {
                         :class="
                           v$.password.$invalid && v$.password.$dirty ? 'border-red-500 border-2' : 'border'
                         "
+                        autocomplete="off"
                         class="peer h-full w-full rounded-md border border-blue-gray-200 !border-t-blue-gray-200 bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:!border-t-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                       />
                       <label
