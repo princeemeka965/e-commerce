@@ -9,14 +9,21 @@ export const useAuthStore = defineStore('auth', () => {
   function signUp(data) {
     user.value = data;
     isAuthenticated.value = true;
-    localStorage.setItem('user', user.value)
+    localStorage.setItem('user', JSON.stringify(user.value))
   }
 
-  function login() {
+  function login(data) {
     const userData = localStorage.getItem('user');
+    const parsedData = JSON.parse(userData);
+
     if (Object.keys(userData).length > 0) {
-      isAuthenticated.value = true;
-      user.value = userData
+      if (parsedData.email !== data.email && parsedData.password !== data.password) {
+        alert('Invalid toast')
+      }
+      else {
+        isAuthenticated.value = true;
+        user.value = parsedData
+      }
     }
   }
 
